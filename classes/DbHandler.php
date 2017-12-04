@@ -47,7 +47,17 @@ class DbHandler{
             
         } //end of switch
     }// End of dbConnectError Function
-    
-    
+    /**
+     * getCategoryList() Function
+     * Get a list of categories for creating menu
+     */
+    public function getCategoryList(){
+        $sql="";
+        try{
+            
+        } catch (Exception $ex) {
+
+        }
+    }
     
 }//End of class
