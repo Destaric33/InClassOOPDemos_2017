@@ -105,7 +105,65 @@ class DbHandler{
         // Return data back to calling enviroment
         return $data;
        
-   }
+   }//End of get PopularList
+   
+   public function getArticle($id){
+       try{
+           //Prepare our sql query with $id param coming from outside environment.
+           $stmt=$this->conn->prepare("SELECT title,description,content
+                                      FROM pages
+                                      WHERE id=:id");
+           //Bind our parameter
+           $stmt->bindvalue(':id',$id,PDO::PARAM_INT);
+            
+           //Execute the query
+           $stmt-> execute();
+           
+           //Fetch the data of an associtative array
+           $page = $stmt->FetchAll(PDO::FETCH_ASSOC);
+           
+           //Fetch array of data items
+           $data = array(
+               'error' =>false,
+               'items' =>$page
+           );
+               
+           } catch (PDOException $ex) {
+            $data = array ('error'=>true,
+                           'message'=>$ex->getMessage()
+       );
+       
+   }//end of try catch
+   
+   //return final data array
+   return $data;
+   
+   }//end of getArticle
+   
+    public function getArticles(){
+      
+           //Prepare our sql query 
+           $sql = ("SELECT id,title,description FROM pages ORDER BY title");
+           
+           try{
+               $stmt=$this->conn->query($sql);
+               $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+               //return array of data items
+               $data = array(
+               'error' =>false,
+               'items' =>$articles
+           );
+            
+           } catch (PDOException $ex) {
+            $data = array ('error'=>true,
+                           'message'=>$ex->getMessage()
+       );
+       
+   }//end of try catch
+   
+   //return final data array
+   return $data;
+   
+   }//end of getArticles
+    
 }//End of class
-
-// => AND -> what is the difference
